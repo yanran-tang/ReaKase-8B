@@ -11,11 +11,7 @@ Requirements can be seen in `/requirements.txt`
 # Dataset
 Datasets can be downloaded from [COLIEE2022](https://sites.ualberta.ca/~rabelo/COLIEE2022/) and [COLIEE2023](https://sites.ualberta.ca/~rabelo/COLIEE2023/). 
 
-Specifically, the downloaded COLIEE2022 folders `task1_train_files_2022` and `task1_test_files_2022` should be put into `/Graph_generation/COLIEE2022/`. 
-
-The label file `task1_train_labels_2022.json` and `task1_test_labels_2022.json` shoule be put into folder `/label/`. 
-
-COLIEE2023 folders should be set in a similar way. 
+The label file `task1_train_labels_2022.json` and `task1_test_labels_2022.json` shoule be put into folder `/label/`, also for COLIEE2023. 
 
 The final project files are as follows:
 
@@ -73,7 +69,7 @@ The final project files are as follows:
   The processed files of `/reasoning/` can be downloaded here [2022](https://drive.google.com/drive/folders/1vNLUBuw5yfguCoGFMqmTvdq9miMTv3xW?usp=sharing), [2023](https://drive.google.com/drive/folders/1e5CrKWnH0oMTh1DrOk7pvMNiHV1pmxLJ?usp=sharing).
 
 ## 4. Processed files
-After all the data processing steps, the files in processed_files are as follows:
+After all the data processing steps, the folders in processed_files are as follows:
     
     processed_files
     ├── 2022
