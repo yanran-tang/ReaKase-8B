@@ -1,0 +1,7 @@
+accelerate==1.11.0
+openai==2.8.1
+peft==0.18.0
+torch==2.8.0
+torchmetrics==1.8.2
+tqdm==4.67.1
+transformers==4.57.1
