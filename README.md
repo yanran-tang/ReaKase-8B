@@ -50,7 +50,7 @@ The final project files are as follows:
     
     The processed files of `/processed/`, `/processed_new/` and `/summary_test(train)_2022_txt/` can be downloaded here [2022](https://drive.google.com/drive/folders/1vNLUBuw5yfguCoGFMqmTvdq9miMTv3xW?usp=sharing), [2023](https://drive.google.com/drive/folders/1e5CrKWnH0oMTh1DrOk7pvMNiHV1pmxLJ?usp=sharing).
 
-- (b) Legal judgements
+- (b) Legal judgments
 
     `python judge_extract.py`
 
@@ -103,9 +103,7 @@ After all the data processing steps, the folders in processed_files are as follo
 
 * Make sure that all the files are generated or downloaded before running models.  
 
-# Model Training
-## 1. ReaKase-8b Model Training
-
+# ReaKase-8b Model Training
   `python main.py`
 
 # Cite
