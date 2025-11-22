@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch_metrics import t_metrics, metric, yf_metric, rank, rank_2stage
 from data_sampler import sample_case
 
-def forward(seed, step, data_name, accelerator, writer, llm_model, llm_tokenizer, llm_max_length, device, data, dataloader, label_dict, yf_path, top_k_list, epoch, temp, bm25_hard_neg_dict, hard_neg_num, pos_aug, ran_aug, aug_edgedrop, aug_featmask_node, aug_featmask_edge, mask, query_list, query_index_list, train_flag, embedding_saving, llm_optimizer):
+def forward(seed, step, data_name, accelerator, writer, llm_model, llm_tokenizer, llm_max_length, device, data, dataloader, label_dict, yf_path, top_k_list, epoch, temp, bm25_hard_neg_dict, hard_neg_num, mask, query_list, query_index_list, train_flag, embedding_saving, llm_optimizer):
     ## Train
     if train_flag:
         loss_model = nn.CrossEntropyLoss()

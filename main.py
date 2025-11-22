@@ -41,18 +41,11 @@ parser.add_argument("--num_head", default=1, type=int, help="Head number of GNN 
 parser.add_argument("--epoch", type=int, default=200, help="Training epochs")
 parser.add_argument("--lr", type=float, default=1e-07, help="Learning rate")
 parser.add_argument("--wd", default=1e-05, type=float, help="Weight decay if we apply some.")
-parser.add_argument("--batch_size", type=int, default=1, help="Batch size for training")
+parser.add_argument("--batch_size", type=int, default=2, help="Batch size for training")
 parser.add_argument("--temp", type=float, default=0.1, help="Temperature for relu")
-parser.add_argument("--ran_neg_num", type=int, default=0, help="Random sampled case number")
-parser.add_argument("--hard_neg_num", type=int, default=0, help="Bm25_neg case number")
-parser.add_argument("--aug_edgedrop", type=float, default=0, help="Augmentation probability of positive")
-parser.add_argument("--aug_featmask_node", type=float, default=0, help="Augmentation probability of node feature masking")
-parser.add_argument("--aug_featmask_edge", type=float, default=0, help="Augmentation probability of node feature masking")
-# parser.add_argument('--pos_aug',action='store_true')
-# parser.add_argument('--ran_aug',action='store_true')
-parser.add_argument('--pos_aug',type=bool, default=False)
-parser.add_argument('--ran_aug',type=bool, default=False)
-parser.add_argument('--llm_max_length',type=int, default=512)
+parser.add_argument("--ran_neg_num", type=int, default=1, help="Random sampled case number")
+parser.add_argument("--hard_neg_num", type=int, default=1, help="Bm25_neg case number")
+parser.add_argument('--llm_max_length',type=int, default=2048)
 parser.add_argument('--seed',type=str, default=42)
 
 ## other parameters
@@ -66,6 +59,8 @@ logging.basicConfig(level=logging.DEBUG,
 logging.warning(args)
 
 def main():   
+    torch.cuda.manual_seed_all(42)
+
     accelerator = Accelerator()
     device = accelerator.device
 
@@ -78,8 +73,8 @@ def main():
     peft_config = LoraConfig(
         task_type=TaskType.FEATURE_EXTRACTION,  # embeddings
         inference_mode=False,
-        r=1,              # rank
-        lora_alpha=4,    # scaling
+        r=4,              # rank
+        lora_alpha=32,    # scaling
         lora_dropout=0.1,  # dropout
         target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],  # 👈 must add this
     )
@@ -226,11 +221,11 @@ def main():
         
         for batched_case_list in tqdm(train_dataloader):
             step += 1
-            forward(args.seed, step, args.data, accelerator, writer, llm_model, llm_tokenizer, args.llm_max_length, device, training_data, batched_case_list, train_labels, yf_path, top_k_list, epoch, args.temp, bm25_hard_neg_dict, args.hard_neg_num, args.pos_aug, args.ran_aug, args.aug_edgedrop, args.aug_featmask_node, args.aug_featmask_edge, mask=None, query_list=None, query_index_list=None, train_flag=True, embedding_saving=False, llm_optimizer=llm_optimizer)        
+            forward(args.seed, step, args.data, accelerator, writer, llm_model, llm_tokenizer, args.llm_max_length, device, training_data, batched_case_list, train_labels, yf_path, top_k_list, epoch, args.temp, bm25_hard_neg_dict, args.hard_neg_num, mask=None, query_list=None, query_index_list=None, train_flag=True, embedding_saving=False, llm_optimizer=llm_optimizer)        
 
         llm_model.eval()
         with torch.no_grad():                       
-            ndcg = forward(args.seed, step, args.data, accelerator, writer, llm_model, llm_tokenizer, args.llm_max_length, device, test_data, test_case_list, test_labels, yf_path, top_k_list, epoch, args.temp, bm25_hard_neg_dict, args.hard_neg_num, args.pos_aug, args.ran_aug, args.aug_edgedrop, args.aug_featmask_node, args.aug_featmask_edge, mask=test_mask, query_list=test_query_list, query_index_list=test_query_index_list, train_flag=False, embedding_saving=False, llm_optimizer=llm_optimizer)
+            ndcg = forward(args.seed, step, args.data, accelerator, writer, llm_model, llm_tokenizer, args.llm_max_length, device, test_data, test_case_list, test_labels, yf_path, top_k_list, epoch, args.temp, bm25_hard_neg_dict, args.hard_neg_num, mask=test_mask, query_list=test_query_list, query_index_list=test_query_index_list, train_flag=False, embedding_saving=False, llm_optimizer=llm_optimizer)
 
         if epoch % SAVE_EVERY == 0:
             accelerator.print(f"Saving checkpoint at epoch {epoch}")

@@ -59,7 +59,7 @@ The final project files are as follows:
 ## 2. Legal Relation Triplets
 
   - Legal relation triplets are extracted as in CaseGNN, please see the Relation Extraction section of [CaseGNN github repo](https://github.com/yanran-tang/CaseGNN#1-information-extraction).
-  - The extracted legal relation triplets can be also downloaded [here](https://drive.google.com/drive/folders/1Ck1KecF28xqsjDZK1fqVGF3BozmSsAb7?usp=sharing).
+  - The extracted legal relation triplets files `/coliee2022_ie/` and `/coliee2023_ie/` can be also downloaded [here](https://drive.google.com/drive/folders/1Ck1KecF28xqsjDZK1fqVGF3BozmSsAb7?usp=sharing).
 
 
 ## 3. Legal Reasoning Generation
@@ -104,7 +104,9 @@ After all the data processing steps, the folders in processed_files are as follo
 * Make sure that all the files are generated or downloaded before running models.  
 
 # ReaKase-8b Model Training
-  `python main.py`
+* Multi GPUs: `accelerate launch --config_file ./lora.yaml main.py`
+
+* Single GPU: `python main.py`
 
 # Cite
 If you find this repo useful, please cite
